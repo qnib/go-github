@@ -35,9 +35,9 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		re := regexp.MustCompile(ghRegex)
 
-		rluClient := github.NewClient(nil)
-		rluOpt := &github.ListOptions{}
-		releases, _, err := rluClient.Repositories.ListReleases(ghOrg, ghRepo, rluOpt)
+		client := github.NewClient(nil)
+		opt := &github.ListOptions{}
+		releases, _, err := client.Repositories.ListReleases(ghOrg, ghRepo, opt)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -47,10 +47,10 @@ to quickly create a Cobra application.`,
 			preRelease := *release.Prerelease
 			draft := *release.Draft
 			if ! (preRelease || draft) {
+				cnt = cnt + 1
 				for _, asset := range release.Assets {
 					if ghLimit == 0 || cnt < ghLimit {
 						if re.MatchString(*asset.Name) {
-							cnt = cnt + 1
 							fmt.Println(*asset.BrowserDownloadURL)
 						}
 					}
