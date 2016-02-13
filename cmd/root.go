@@ -27,6 +27,7 @@ var cfgFile string
 var ghOrg string
 var ghRepo string
 var ghPrefix string
+var ghLimit int
 
 
 // This represents the base command when called without any subcommands
@@ -64,6 +65,7 @@ func init() {
 	RootCmd.PersistentFlags().StringVar(&ghOrg, "ghorg", "qnib", "github organisation/owner of repository")
 	RootCmd.PersistentFlags().StringVar(&ghRepo, "ghrepo", "", "github repository within organisation/owner")
 	RootCmd.PersistentFlags().StringVar(&ghPrefix, "prefix", "", "prefix to match against (e.g. asset)")
+	RootCmd.PersistentFlags().IntVar(&ghLimit, "limit", 0, "Limits output length (default: 0 == unlimited)")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.

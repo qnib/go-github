@@ -39,13 +39,18 @@ to quickly create a Cobra application.`,
 		if err != nil {
 			fmt.Println(err)
 		}
+		var cnt int
+		cnt = 0
 		for _, release := range releases {
 			preRelease := *release.Prerelease
 			draft := *release.Draft
 			if ! (preRelease || draft) {
 				for _, asset := range release.Assets {
-					if strings.HasPrefix(*asset.Name, ghPrefix) {
-						fmt.Println(*asset.BrowserDownloadURL)
+					if ghLimit == 0 || cnt < ghLimit {
+						if strings.HasPrefix(*asset.Name, ghPrefix) {
+							cnt = cnt + 1
+							fmt.Println(*asset.BrowserDownloadURL)
+						}
 					}
 				}
 			}
