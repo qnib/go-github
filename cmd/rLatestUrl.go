@@ -46,10 +46,10 @@ to quickly create a Cobra application.`,
 		for _, release := range releases {
 			preRelease := *release.Prerelease
 			draft := *release.Draft
-			if ! (preRelease || draft) {
+			if ghLimit == 0 || cnt < ghLimit {
 				cnt = cnt + 1
-				for _, asset := range release.Assets {
-					if ghLimit == 0 || cnt < ghLimit {
+				if ! (preRelease || draft) {
+					for _, asset := range release.Assets {
 						if re.MatchString(*asset.Name) {
 							fmt.Println(*asset.BrowserDownloadURL)
 						}
