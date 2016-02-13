@@ -16,7 +16,7 @@ package cmd
 
 import (
 	"fmt"
-	"strings"
+	"regexp"
 
 	"github.com/spf13/cobra"
 	"github.com/google/go-github/github"
@@ -33,6 +33,8 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
+		re := regexp.MustCompile(ghRegex)
+
 		rluClient := github.NewClient(nil)
 		rluOpt := &github.ListOptions{}
 		releases, _, err := rluClient.Repositories.ListReleases(ghOrg, ghRepo, rluOpt)
@@ -47,7 +49,7 @@ to quickly create a Cobra application.`,
 			if ! (preRelease || draft) {
 				for _, asset := range release.Assets {
 					if ghLimit == 0 || cnt < ghLimit {
-						if strings.HasPrefix(*asset.Name, ghPrefix) {
+						if re.MatchString(*asset.Name) {
 							cnt = cnt + 1
 							fmt.Println(*asset.BrowserDownloadURL)
 						}
