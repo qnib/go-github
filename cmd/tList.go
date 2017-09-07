@@ -20,6 +20,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/google/go-github/github"
+	"context"
 )
 
 // tListCmd represents the tList command
@@ -33,7 +34,7 @@ var tListCmd = &cobra.Command{
 		// TODO: Work your own magic here
 		client := github.NewClient(nil)
 		opt := &github.ListOptions{}
-		tags, _, err := client.Repositories.ListTags(ghOrg, ghRepo, opt)
+		tags, _, err := client.Repositories.ListTags(context.Background(), ghOrg, ghRepo, opt)
 		if err != nil {
 	   		fmt.Println(err)
    		}

@@ -20,6 +20,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/google/go-github/github"
+	"context"
 )
 
 // rLatestUrlCmd represents the rLatestUrl command
@@ -37,7 +38,7 @@ to quickly create a Cobra application.`,
 
 		client := github.NewClient(nil)
 		opt := &github.ListOptions{}
-		releases, _, err := client.Repositories.ListReleases(ghOrg, ghRepo, opt)
+		releases, _, err := client.Repositories.ListReleases(context.Background(), ghOrg, ghRepo, opt)
 		if err != nil {
 			fmt.Println(err)
 		}

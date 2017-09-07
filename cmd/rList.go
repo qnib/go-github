@@ -20,6 +20,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/google/go-github/github"
+	"context"
 )
 
 // rListCmd represents the rList command
@@ -32,7 +33,7 @@ var rListCmd = &cobra.Command{
 		fmt.Println("rList called")
 		client := github.NewClient(nil)
 		opt := &github.ListOptions{}
-		releases, _, err := client.Repositories.ListReleases(ghOrg, ghRepo, opt)
+		releases, _, err := client.Repositories.ListReleases(context.Background(), ghOrg, ghRepo, opt)
 		if err != nil {
 	   		fmt.Println(err)
    		}
