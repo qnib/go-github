@@ -1,0 +1,13 @@
+workspace:
+  base: /usr/local/src
+  path: github.com/qnib/go-github/
+
+pipeline:
+  alpine:
+    image: qnib/alplain-golang:1.9
+    commands:
+      - /usr/local/go/bin/go build -o go-github_$(git describe --abbrev=0 --tags)_MuslLinux
+  x86:
+    image: qnib/uplain-golang
+    commands:
+      - go build -o go-github_$(git describe --abbrev=0 --tags)_Linux
